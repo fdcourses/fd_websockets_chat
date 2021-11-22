@@ -6,7 +6,12 @@ const { Message } = require('./models');
 const { PORT, SOCKET_EVENTS } = require('./config');
 const server = http.createServer(app);
 
-const io = Server(server);
+const io = Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 io.on('connection', (socket) => {
   console.log('connected')

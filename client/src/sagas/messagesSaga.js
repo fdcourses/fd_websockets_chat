@@ -1,21 +1,19 @@
-import { put } from 'redux-saga/effects'; 
+import { put } from 'redux-saga/effects';
 
 import * as MessagesActionCreators from './../actions/messagesActionCreators';
 import * as API from '../api';
 
-export function * createMessageSaga(action) {
+export function* createMessageSaga(action) {
   try {
-    const {data: message} = yield API.createMessage(action.payload.message);
-
-    yield put(MessagesActionCreators.getMessagesSuccess(message));
+    yield API.createMessage(action.payload.message);
   } catch (error) {
-    yield put(MessagesActionCreators.getMessagesSuccess(error));
+    yield put(MessagesActionCreators.createMessageError(error));
   }
 }
 
-export function * getMessagesSaga(action) {
+export function* getMessagesSaga(action) {
   try {
-    const {data: message} = yield API.getMessages();
+    const { data: message } = yield API.getMessages();
 
     yield put(MessagesActionCreators.getMessagesSuccess(message));
   } catch (error) {

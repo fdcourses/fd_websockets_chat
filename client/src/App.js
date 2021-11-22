@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as MessagesActionCreators from './actions/messagesActionCreators';
@@ -16,6 +16,14 @@ function App() {
   useEffect(() => {
     getMessagesRequest();
   }, []);
+
+  useLayoutEffect(() => {
+    document.title = 'Main Page';
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }, [messages]);
 
   return (
     <div>

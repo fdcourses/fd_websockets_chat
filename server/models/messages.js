@@ -8,6 +8,10 @@ const messageSchema = new Schema(
       min: 1,
       max: 1024,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   },
   { timestamps: Date }
 );

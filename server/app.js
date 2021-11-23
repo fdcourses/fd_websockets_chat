@@ -9,9 +9,17 @@ app.use(express.json());
 
 app.get('/', async (req, res, next) => {
   try {
-    const messages = await Message.find();
+    Message.find()
+    .populate('user')
+    .exec((err, message) => {
+      if(err) {
+        throw new Error('bad populate');
+      }
 
-    res.send(messages);
+
+      res.send(message);
+    });
+
   } catch (error) {
     next(error);
   }

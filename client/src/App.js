@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as MessagesActionCreators from './actions/messagesActionCreators';
 
 function App() {
-  const { messages, isLoading, error } = useSelector((state) => state.chat);
+  const { messages, isLoading } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
 
   const { getMessagesRequest, createMessageRequest } = bindActionCreators(
@@ -29,20 +29,23 @@ function App() {
     <div>
       <ul>
         {isLoading && 'LOADING'}
-        {messages.map((msg) => (
-          <li key={msg._id}>
-            <pre>{JSON.stringify(msg, null, 4)}</pre>
+        {messages.map((msg) => {
+          return <li key={msg._id} style={{display: 'flex'}}>
+            <h1 style={{fontSize: '16px'}}>{msg.user.name || 'Anon'} написал:</h1>
+            <p>{msg.text}</p>
           </li>
-        ))}
+        }
+        )}
       </ul>
       <Formik
-        initialValues={{ text: '' }}
+        initialValues={{ text: '' , name: ''}}
         onSubmit={(values, formikBag) => {
           createMessageRequest(values);
-          formikBag.resetForm();
+          formikBag.setFieldValue('text', '');
         }}
       >
         <Form>
+          <Field name="name" />
           <Field name="text" />
           <button type="submit">Send Message</button>
         </Form>

@@ -17,7 +17,7 @@ export const createMessage = async (message) =>
 
 socket.on(SOCKET_EVENTS.NEW_MESSAGE, (newMessage) => {
   console.log(newMessage);
-  store.dispatch(MessageActionCreators.createMessageSuccess(newMessage));
+  store.dispatch(MessageActionCreators.createMessageSuccess(newMessage.data));
 });
 
 socket.on(SOCKET_EVENTS.NEW_MESSAGE_ERRROR, (error) => {
